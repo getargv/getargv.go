@@ -11,12 +11,12 @@ import (
 	"testing"
 )
 
-// TestAsString calls getargv.AsString with test process' pid, and nuls and skip fully exercised
+// TestAsString calls getargv.AsString with pid, nuls, and skip fully exercised
 func TestAsString(t *testing.T) {
 	args := os.Args
 	pid := uint(os.Getpid())
 	for _, v := range [2]bool{true, false} {
-		for i := 1; i <= len(args); i++ { // in go 1.22 use: for i := range len(args) {
+		for i := 1; i <= len(args); i++ { // in go 1.22 use: for i := range len(args) + 1 {
 			t.Run(fmt.Sprintf("skip=%d, nuls=%t", i, v), func(t *testing.T) {
 				var sep string
 				if v {
@@ -37,12 +37,12 @@ func TestAsString(t *testing.T) {
 	}
 }
 
-// TestAsBytes calls getargv.AsBytes with test process' pid, and nuls and skip fully exercised
+// TestAsBytes calls getargv.AsBytes with pid, nuls, and skip fully exercised
 func TestAsBytes(t *testing.T) {
 	args := os.Args
 	pid := uint(os.Getpid())
 	for _, v := range [2]bool{true, false} {
-		for i := 1; i <= len(args); i++ { // in go 1.22 use: for i := range len(args) {
+		for i := 1; i <= len(args); i++ { // in go 1.22 use: for i := range len(args)+1 {
 			t.Run(fmt.Sprintf("skip=%d, nuls=%t", i, v), func(t *testing.T) {
 				var sep string
 				if v {
@@ -63,8 +63,7 @@ func TestAsBytes(t *testing.T) {
 	}
 }
 
-// TestAsStrings calls getargv.AsStrings with test process' pid,
-// checking for a valid return value.
+// TestAsStrings calls getargv.AsStrings with test process' pid, checking for a valid return value.
 func TestAsStrings(t *testing.T) {
 	want := os.Args
 	pid := uint(os.Getpid())
@@ -79,8 +78,7 @@ type failureCase struct {
 	err error
 }
 
-// TestAsStrings calls getargv.AsStrings with various pids,
-// checking for correct errors.
+// TestAsStringsFailure calls getargv.AsStrings with various pids, checking for correct errors.
 func TestAsStringsFailure(t *testing.T) {
 	for _, v := range []failureCase{{0,syscall.EPERM},{99999+1,syscall.ESRCH}} {
 		pid := v.pid
