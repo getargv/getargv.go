@@ -1,6 +1,6 @@
 <h1><img src="logo.svg" width="200" alt="getargv"></h1>
 
-<!-- ci badge placeholder -->
+[![Go](https://github.com/getargv/getargv.go/actions/workflows/go.yml/badge.svg)](https://github.com/getargv/getargv.go/actions/workflows/go.yml)
 
 This package allows you to query the arguments of other processes on macOS.
 
