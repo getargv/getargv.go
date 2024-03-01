@@ -1,3 +1,5 @@
+//go:build darwin && cgo
+
 package getargv
 
 import (
@@ -16,7 +18,7 @@ func TestAsString(t *testing.T) {
 	args := os.Args
 	pid := uint(os.Getpid())
 	for _, v := range [2]bool{true, false} {
-		for i := 1; i <= len(args); i++ { // in go 1.22 use: for i := range len(args) + 1 {
+		for i := range len(args) + 1 {
 			t.Run(fmt.Sprintf("skip=%d, nuls=%t", i, v), func(t *testing.T) {
 				var sep string
 				if v {
@@ -72,7 +74,7 @@ func TestAsBytes(t *testing.T) {
 	args := os.Args
 	pid := uint(os.Getpid())
 	for _, nuls := range [2]bool{true, false} {
-		for skip := 1; skip <= len(args); skip++ { // in go 1.22 use: for i := range len(args)+1 {
+		for skip := range len(args)+1 {
 			t.Run(fmt.Sprintf("skip=%d, nuls=%t", skip, nuls), func(t *testing.T) {
 				var sep string
 				if nuls {
