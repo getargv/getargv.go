@@ -5,8 +5,7 @@
 package getargv
 
 /*
-#cgo CFLAGS: -g
-#cgo LDFLAGS: -lgetargv
+#cgo pkg-config: getargv
 #include "libgetargv.h"
 */
 import "C"
