@@ -17,8 +17,8 @@ If `go.mod` is not being used to manage dependencies, import the package with:
 ## Usage
 
 ```go
-Getargv.asString(some_process_id) #=> "arg0\x00arg1"
-Getargv.asBytes(some_process_id) #=> []byte("arg0\x00arg1")
+Getargv.asString(some_process_id, 0, false) #=> "arg0\x00arg1\x00"
+Getargv.asBytes(some_process_id, 0, false) #=> []byte("arg0\x00arg1\x00")
 Getargv.asStrings(some_process_id) #=> ["arg0","arg1"]
 ```
 
