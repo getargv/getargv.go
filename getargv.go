@@ -2,6 +2,8 @@
 // Copyright (C) 2024 Camden Narzt
 //
 // Distributed under terms of the BSD-3 license.
+//go:build darwin && cgo
+
 package getargv
 
 /*
