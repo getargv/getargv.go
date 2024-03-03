@@ -16,7 +16,7 @@ import "unsafe"
 type (
 	Argv        = C.struct_ArgvResult
 	ArgvArgc    = C.struct_ArgvArgcResult
-	ArgvOptions = C.struct_GetArgvOptions
+	argvOptions = C.struct_GetArgvOptions
 	pid_t       = uint
 )
 
@@ -26,7 +26,7 @@ func p2i(p *C.char) uintptr {
 
 func getArgv(pid pid_t, skip uint, nuls bool) (*Argv, error) {
 	r := new(Argv)
-	o := ArgvOptions{
+	o := argvOptions{
 		skip: C.uint(skip),
 		pid:  C.pid_t(pid),
 		nuls: C.bool(nuls),
