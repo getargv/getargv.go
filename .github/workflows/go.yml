@@ -43,8 +43,8 @@ jobs:
       run: go test -C getargv.go
 
   release:
-    name: Release
-    runs-on: macos-latest
+    needs: [ build ]
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
