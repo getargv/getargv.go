@@ -4,6 +4,10 @@
 // Distributed under terms of the BSD-3 license.
 //go:build darwin && cgo
 
+// Package getargv fetches the arguments of other processes in multiple formats
+//
+// The getargv package can only be used on macOS, because other operating
+// systems have other means of accessing these arguments.
 package getargv
 
 /*
@@ -39,6 +43,14 @@ func getArgv(pid pid_t, skip uint, nuls bool) (*argv, error) {
 	}
 }
 
+// AsBytes gets the arguments of pid as a slice of bytes, with skip leading arguments skipped,
+// and NUL bytes replaced with spaces if nuls is true
+// it can return an error if:
+//   - the caller does not have permission to view the arguments of the target pid
+//   - the target pid does not exist
+//   - the kernel returns the targeted pid's args in an invalid format
+//   - the targeted pid's args are too long (somehow longer than ARG_MAX) and cannot be parsed safely.
+//   - AsBytes was asked to skip more args than targeted pid has.
 func AsBytes(pid pid_t, skip uint, nuls bool) ([]byte, error) {
 	a, err := getArgv(pid, skip, nuls)
 	if err != nil {
@@ -55,6 +67,14 @@ func AsBytes(pid pid_t, skip uint, nuls bool) ([]byte, error) {
 	return C.GoBytes(unsafe.Pointer(a.start_pointer), C.int(end-start+1)), nil
 }
 
+// AsString gets the arguments of pid as a string, with skip leading arguments skipped,
+// and NUL bytes replaced with spaces if nuls is true
+// it can return an error if:
+//   - the caller does not have permission to view the arguments of the target pid
+//   - the target pid does not exist
+//   - the kernel returns the targeted pid's args in an invalid format
+//   - the targeted pid's args are too long (somehow longer than ARG_MAX) and cannot be parsed safely.
+//   - AsString was asked to skip more args than targeted pid has.
 func AsString(pid pid_t, skip uint, nuls bool) (string, error) {
 	a, err := getArgv(pid, skip, nuls)
 	if err != nil {
@@ -71,6 +91,11 @@ func AsString(pid pid_t, skip uint, nuls bool) (string, error) {
 	return C.GoStringN(a.start_pointer, C.int(end-start+1)), nil
 }
 
+// AsStrings gets the arguments of pid as a slice of strings, it can return an error if:
+//   - the caller does not have permission to view the arguments of the target pid
+//   - the target pid does not exist
+//   - the kernel returns the targeted pid's args in an invalid format
+//   - the targeted pid's args are too long (somehow longer than ARG_MAX) and cannot be parsed safely.
 func AsStrings(pid pid_t) ([]string, error) {
 	a := new(argvArgc)
 	success, err := C.get_argv_and_argc_of_pid(C.pid_t(pid), a)
