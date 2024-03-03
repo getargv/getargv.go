@@ -74,7 +74,7 @@ func TestAsBytes(t *testing.T) {
 	args := os.Args
 	pid := uint(os.Getpid())
 	for _, nuls := range [2]bool{true, false} {
-		for skip := range len(args)+1 {
+		for skip := range len(args) + 1 {
 			t.Run(fmt.Sprintf("skip=%d, nuls=%t", skip, nuls), func(t *testing.T) {
 				var sep string
 				if nuls {
