@@ -14,8 +14,8 @@ import "C"
 import "unsafe"
 
 type (
-	Argv        = C.struct_ArgvResult
-	ArgvArgc    = C.struct_ArgvArgcResult
+	argv        = C.struct_ArgvResult
+	argvArgc    = C.struct_ArgvArgcResult
 	argvOptions = C.struct_GetArgvOptions
 	pid_t       = uint
 )
@@ -24,8 +24,8 @@ func p2i(p *C.char) uintptr {
 	return uintptr(unsafe.Pointer(p))
 }
 
-func getArgv(pid pid_t, skip uint, nuls bool) (*Argv, error) {
-	r := new(Argv)
+func getArgv(pid pid_t, skip uint, nuls bool) (*argv, error) {
+	r := new(argv)
 	o := argvOptions{
 		skip: C.uint(skip),
 		pid:  C.pid_t(pid),
@@ -72,7 +72,7 @@ func AsString(pid pid_t, skip uint, nuls bool) (string, error) {
 }
 
 func AsStrings(pid pid_t) ([]string, error) {
-	a := new(ArgvArgc)
+	a := new(argvArgc)
 	success, err := C.get_argv_and_argc_of_pid(C.pid_t(pid), a)
 	if !success {
 		return nil, err
