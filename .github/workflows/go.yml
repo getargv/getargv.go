@@ -60,7 +60,7 @@ jobs:
         git tag '${{ steps.bump_version.outputs.new_version }}'
         git push origin tag '${{ steps.bump_version.outputs.new_version }}'
         git push origin HEAD:main
-    - uses: softprops/action-gh-release@v1
+    - uses: softprops/action-gh-release@v2
       with:
         name: ${{ steps.bump_version.outputs.new_version }}
         tag_name: ${{ steps.bump_version.outputs.new_version }}
