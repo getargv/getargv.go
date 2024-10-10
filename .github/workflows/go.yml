@@ -16,9 +16,9 @@ jobs:
     strategy:
       matrix:
         go:
+          - '1.23'
           - '1.22'
-          - '1.21'
-          # https://go.dev/doc/devel/release
+          # Only keep 2 per: https://go.dev/doc/devel/release
     name: Go ${{ matrix.go }}
     steps:
     - uses: actions/checkout@v4
