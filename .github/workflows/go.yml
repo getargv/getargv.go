@@ -16,8 +16,9 @@ jobs:
     strategy:
       matrix:
         go:
-          - '1.23'
-          - '1.22'
+         #- '1.25' Rel: 2025-08
+          - '1.24' # Rel: 2025-02
+          - '1.23' # Rel: 2024-08
           # Only keep 2 per: https://go.dev/doc/devel/release
     name: Go ${{ matrix.go }}
     steps:
