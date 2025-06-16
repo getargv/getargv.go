@@ -1,5 +1,5 @@
 // getargv.go
-// Copyright (C) 2024 Camden Narzt
+// Copyright (C) 2025 Camden Narzt
 //
 // Distributed under terms of the BSD-3 license.
 //go:build darwin && cgo
