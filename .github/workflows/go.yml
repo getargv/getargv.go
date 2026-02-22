@@ -22,7 +22,7 @@ jobs:
           # Only keep 2 per: https://go.dev/doc/devel/release
     name: Go ${{ matrix.go }}
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         repository: getargv/getargv
         path: getargv
@@ -33,7 +33,7 @@ jobs:
     - name: Install libgetargv
       run: sudo make install_dylib
       working-directory: getargv
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         path: getargv.go
     - name: Set up Go
@@ -52,7 +52,7 @@ jobs:
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         fetch-tags: true
         fetch-depth: 0 # until https://github.com/actions/checkout/issues/1471 fixed
