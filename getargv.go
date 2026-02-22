@@ -1,7 +1,6 @@
 // getargv.go
-// Copyright (C) 2025 Camden Narzt
-//
-// Distributed under terms of the BSD-3 license.
+// Copyright: see LICENSE file
+
 //go:build darwin && cgo
 
 // Package getargv fetches the arguments of other processes in multiple formats
