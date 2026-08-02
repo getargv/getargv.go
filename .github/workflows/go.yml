@@ -16,13 +16,13 @@ jobs:
     strategy:
       matrix:
         go:
-          # - '1.27' # Rel: 2026-08
+          # - '1.28' # Rel: 2027-02
+          - '1.27'
           - '1.26'
-          - '1.25'
           # Only keep 2 per: https://go.dev/doc/devel/release
     name: Go ${{ matrix.go }}
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         repository: getargv/getargv
         path: getargv
@@ -33,11 +33,11 @@ jobs:
     - name: Install libgetargv
       run: sudo make install_dylib
       working-directory: getargv
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         path: getargv.go
     - name: Set up Go
-      uses: actions/setup-go@v6
+      uses: actions/setup-go@v7
       with:
         go-version: ${{ matrix.go }}
         check-latest: true
@@ -52,7 +52,7 @@ jobs:
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         fetch-tags: true
         fetch-depth: 0 # until https://github.com/actions/checkout/issues/1471 fixed
@@ -64,7 +64,7 @@ jobs:
         git tag '${{ steps.bump_version.outputs.new_version }}'
         git push origin tag '${{ steps.bump_version.outputs.new_version }}'
         git push origin HEAD:main
-    - uses: softprops/action-gh-release@v2
+    - uses: softprops/action-gh-release@v3
       with:
         name: ${{ steps.bump_version.outputs.new_version }}
         tag_name: ${{ steps.bump_version.outputs.new_version }}
